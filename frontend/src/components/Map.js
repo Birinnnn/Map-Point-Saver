@@ -8,7 +8,7 @@ import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet'
 import {useState, useEffect, useCallback} from "react";
 
 
-function CoordsComponent({setCenterMap}) {
+function CoordsComponent({setCenterMap, selectedPoint}) {
   const map = useMap();
 
   const onMove = useCallback(() => {
@@ -22,7 +22,11 @@ function CoordsComponent({setCenterMap}) {
     };
   }, [map, onMove]);
 
-  console.log('map center:', map.getCenter());
+  useEffect(() => {
+    if (selectedPoint) {
+      map.setView([selectedPoint.lat, selectedPoint.lng]);
+    }
+  }, [selectedPoint, map]);
 }
 
 const Map = ({points, selectedPoint, setCenterMap, center }) => {
@@ -52,7 +56,7 @@ const Map = ({points, selectedPoint, setCenterMap, center }) => {
           } position={[point.lat, point.lng]} />
           ))
         }
-        <CoordsComponent setCenterMap={setCenterMap} />
+        <CoordsComponent setCenterMap={setCenterMap} selectedPoint={selectedPoint} />
       </MapContainer>
     </div>
   )

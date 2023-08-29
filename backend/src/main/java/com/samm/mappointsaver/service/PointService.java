@@ -26,16 +26,10 @@ public class PointService {
         return pointMapper.pointToPointDto(savedPoint);
     }
 
-    public PointDto deletePoint(@RequestBody PointDto pointDto) {
-        Point point = pointRepository.getPointByInfo(pointDto.getLat(), pointDto.getLng(), pointDto.getDateTime());
-
-        if(point == null) {
-            return null;
-        }
-
-        PointDto removedPoint = pointMapper.pointToPointDto(point);
-        pointRepository.deleteById(point.getId());
-        return removedPoint;
+    public PointDto deletePoint(Long id) {
+        Point point = pointRepository.findById(id).orElseThrow();
+        pointRepository.delete(point);
+        return pointMapper.pointToPointDto(point);
     }
 
     public List<PointDto> getAllPoints() {

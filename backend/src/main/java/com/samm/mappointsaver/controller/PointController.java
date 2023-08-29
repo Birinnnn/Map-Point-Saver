@@ -29,8 +29,8 @@ public class PointController {
         return ResponseEntity.ok(pointService.getAllPoints());
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<PointDto> deletePoint(@RequestBody PointDto pointDto) {
-        return ResponseEntity.ok(pointService.deletePoint(pointDto));
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<PointDto> deletePoint(@PathVariable Long id) {
+        return ResponseEntity.ok(pointService.deletePoint(id));
     }
 }
